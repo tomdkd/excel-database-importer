@@ -1,0 +1,7 @@
+parameters:
+  tomdkd.excel_database_importer.csv_generate_structure_command.class: Tomdkd\ExcelDatabaseImporter\Command\CSVGenerateStructureCommand
+
+services:
+  tomdkd.excel_database_importer.csv_generate_structure_command:
+    class: '%tomdkd.excel_database_importer.csv_generate_structure_command.class%'
+    tags: ['console.command']
