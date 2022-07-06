@@ -26,6 +26,23 @@ class CSVGenerateStructureCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $interface    = new SymfonyStyle($input, $output);
+        $filePath     = $input->getArgument('file_path');
+        $outputFolder = $input->getArgument('output_folder');
+
+        if (!$input->getOption('validate') && is_null($outputFolder)) {
+            $interface->error('You sould specify an output folder.');
+            return Command::FAILURE;
+        }
+
+        if (!file_exists($filePath)) {
+            $filePathExploded = explode('/', $filePath);
+            $fileName = end($filePathExploded);
+            $interface->error(sprintf('%s not found in %s', $fileName, $filePath));
+
+            return Command::FAILURE;
+        }
+
         return Command::SUCCESS;
     }
 
