@@ -12,7 +12,13 @@ class ExcelDatabaseImporterExtension extends Extension
 
     public function load(array $configs, ContainerBuilder $container)
     {
-        $locator    = new FileLocator(sprintf('%s/%s', __DIR__, '../Resources/config'));
+        $locator    = new FileLocator(
+            sprintf(
+                '%s/%s',
+                __DIR__,
+                '../Resources/config'
+            )
+        );
         $fileloader = new YamlFileLoader($container, $locator);
 
         $fileloader->load('command.yml');
