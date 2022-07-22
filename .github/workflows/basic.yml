@@ -15,5 +15,5 @@ jobs:
       - uses: actions/checkout@v1
       # For YAML Actions, use v2 or later
       - uses: docker://composer
-        with:
-          command: install --optimize-autoloader --prefer-dist
+        run:
+          - composer install
