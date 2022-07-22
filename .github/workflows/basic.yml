@@ -10,7 +10,7 @@ on:
 
 jobs:
   dependencies:
-    runs-on: composer
+    runs-on: composer:2.0
 
     steps:
       - name: Installing dependencies
