@@ -20,7 +20,8 @@ jobs:
   code_style:
     runs-on: ubuntu-latest
     steps:
-      - name: code-style
-        run:
-          - composer install
-          - php ./vendor/bin/phpcs
+      - name: install_composer
+        run: composer install
+
+      - name: code_style
+        run: php ./vendor/bin/phpcs
