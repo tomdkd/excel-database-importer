@@ -10,9 +10,10 @@ on:
 
 jobs:
   composer:
-    runs-on: docker://composer
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      # For YAML Actions, use v2 or later
-      - name: Install dependencies
+
+      - name: install
+        uses: docker://composer
         run: composer install
