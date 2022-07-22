@@ -23,8 +23,5 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: install_composer
-        run: composer install
-
       - name: code_style
         run: php ./vendor/bin/phpcs ./src --standard=PSR2 --ignore=*/vendor/*,*/Resources/*
