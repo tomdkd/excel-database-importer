@@ -19,6 +19,7 @@ jobs:
 
   code_style:
     runs-on: ubuntu-latest
+    workflows: ['composer']
     steps:
       - uses: actions/checkout@v1
 
