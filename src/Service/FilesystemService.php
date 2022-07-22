@@ -23,22 +23,29 @@ class FilesystemService
         $datetimeRegex     = "/[0-9]{4}-[0-9]{2}-[0-9]{2}/";
         $boolPossibilities = ['1', '0', 'true', 'false', 'yes', 'no'];
 
-        if(empty($string)) return null;
+        if (empty($string)) {
+            return null;
+        }
 
-        if(!preg_match($intRegex,$string)) {
-
-            if(preg_match($floatRegex,$string)) {
+        if (!preg_match($intRegex, $string)) {
+            if (preg_match($floatRegex, $string)) {
                 return "DECIMAL";
             }
 
             return "INT";
         }
 
-        if (in_array($string, $boolPossibilities)) return 'BOOLEAN';
+        if (in_array($string, $boolPossibilities)) {
+            return 'BOOLEAN';
+        }
 
-        if (preg_match($datetimeRegex, $string)) return 'DATE';
+        if (preg_match($datetimeRegex, $string)) {
+            return 'DATE';
+        }
 
-        if (strlen($string) > 30) return 'TEXT';
+        if (strlen($string) > 30) {
+            return 'TEXT';
+        }
 
         return 'VARCHAR(255)';
     }
@@ -65,9 +72,9 @@ class FilesystemService
 
     public function getFileAsArray(): array
     {
-        return array_map(function($line) {
+        return array_map(function ($line) {
             return str_replace(['-', 'é', 'è', 'à', "\r\n"], ['_', 'e', 'e', 'a', ''], strtolower($line));
-            }, file($this->file->getPathname()));
+        }, file($this->file->getPathname()));
     }
 
     public function getName(): string
@@ -88,5 +95,4 @@ class FilesystemService
         $fileAsArray = array_values($fileAsArray);
         return explode($delimiter, $columns);
     }
-
 }

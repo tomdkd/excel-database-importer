@@ -2,7 +2,8 @@
 
 namespace Tomdkd\ExcelDatabaseImporter\Util;
 
-class SQLTableGenerator {
+class SQLTableGenerator
+{
 
     private string $tableName;
     private array  $columns;
@@ -26,5 +27,4 @@ class SQLTableGenerator {
     {
         return $this->columns;
     }
-
 }

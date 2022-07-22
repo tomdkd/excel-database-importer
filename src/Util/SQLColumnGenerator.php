@@ -5,7 +5,8 @@ namespace Tomdkd\ExcelDatabaseImporter\Util;
 use Tomdkd\ExcelDatabaseImporter\Exception\EmptyColumnException;
 use Tomdkd\ExcelDatabaseImporter\Service\FilesystemService;
 
-class SQLColumnGenerator {
+class SQLColumnGenerator
+{
 
     private string $columnName;
     private int    $columnIndex;
@@ -18,7 +19,7 @@ class SQLColumnGenerator {
 
     public function __construct(string $columnName, int $columnIndex, array $values, string $delimiter)
     {
-        $this->columnName  = str_replace("\r\n", '',$columnName);
+        $this->columnName  = str_replace("\r\n", '', $columnName);
         $this->columnIndex = $columnIndex;
         $this->lines       = array_values($values);
         $this->filesystem   = new FilesystemService();
@@ -55,7 +56,9 @@ class SQLColumnGenerator {
     public function isNullable(): bool
     {
         foreach ($this->columnValues as $value) {
-            if (is_null($value)) return true;
+            if (is_null($value)) {
+                return true;
+            }
         }
 
         return false;
@@ -64,13 +67,16 @@ class SQLColumnGenerator {
     private function getColumnType(): ?string
     {
         foreach ($this->columnValues as $value) {
-            if (!is_null($value)) return $this->filesystem->getSQLTypeFromString($value);
+            if (!is_null($value)) {
+                return $this->filesystem->getSQLTypeFromString($value);
+            }
         }
 
         throw new EmptyColumnException(sprintf('Column %s have only empty values', $this->columnName));
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->columnConfiguration['name'];
     }
 
@@ -93,5 +99,4 @@ class SQLColumnGenerator {
     {
         return $this->columnIndex === 0;
     }
-
 }

@@ -2,7 +2,8 @@
 
 namespace Tomdkd\ExcelDatabaseImporter\Util;
 
-class SQLDatabaseGenerator {
+class SQLDatabaseGenerator
+{
 
     private ?string $databaseName   = null;
     private array $tables           = [];
@@ -30,7 +31,8 @@ class SQLDatabaseGenerator {
 
             foreach ($table->getColumns() as $column) {
                 // Adding column structure
-                $columns[] = sprintf('%s %s %s %s',
+                $columns[] = sprintf(
+                    '%s %s %s %s',
                     $column->getName(),
                     $column->getDatatype(),
                     $column->isNullable() ? 'NULLABLE' : 'NOT NULL',
@@ -62,7 +64,9 @@ class SQLDatabaseGenerator {
 
     private function validate(): bool
     {
-        if (is_null($this->databaseName) || empty($this->tables)) return false;
+        if (is_null($this->databaseName) || empty($this->tables)) {
+            return false;
+        }
         return true;
     }
 
@@ -70,5 +74,4 @@ class SQLDatabaseGenerator {
     {
         $this->sqlQuery = sprintf('%s %s', $this->sqlQuery, $text);
     }
-
 }
