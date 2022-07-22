@@ -10,8 +10,8 @@ update-dep: ## Update composer dependencies
 
 .PHONY: cs
 cs: ## Check code with sniffer
-	./vendor/bin/phpcs ./src
+	./vendor/bin/phpcs ./src --standard=PSR2 --ignore=*/vendor/*,*/Resources/*
 
 .PHONY: fix-cs
 fix-cs: ## Fix code sniffer errors
-	php ./vendor/bin/phpcbf ./src
+	php ./vendor/bin/phpcbf ./src --standard=PSR2 --ignore=*/vendor/*,*/Resources/*
