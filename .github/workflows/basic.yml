@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  composer:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -17,11 +17,5 @@ jobs:
       - name: install
         run: composer install
 
-  code_style:
-    runs-on: ubuntu-latest
-    needs: ['composer']
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: code_style
+      - name: code-style
         run: php ./vendor/bin/phpcs ./src --standard=PSR2 --ignore=*/vendor/*,*/Resources/*
