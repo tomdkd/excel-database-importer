@@ -26,4 +26,4 @@ jobs:
         run: composer install
 
       - name: code_style
-        run: php ./vendor/bin/phpcs
+        run: php ./vendor/bin/phpcs ./src
