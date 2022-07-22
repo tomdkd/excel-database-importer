@@ -16,3 +16,12 @@ jobs:
 
       - name: install
         run: composer install
+
+  code-style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: code-style
+        run: [
+          - composer install
+          - php ./vendor/bin/phpcs
+        ]
