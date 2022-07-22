@@ -3,11 +3,9 @@
 namespace Tomdkd\ExcelDatabaseImporter\Command;
 
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Tomdkd\ExcelDatabaseImporter\Service\FilesystemService;
@@ -25,17 +23,29 @@ class CSVGenerateStructureCommand extends Command
         parent::__construct($name);
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @return void
+     */
     protected function configure()
     {
         $this->setDescription('Try your CSV file and generate an example of your future database structure.');
-        $this->addOption('validate', '', InputOption::VALUE_NONE, 'Only validate database structure.');
-
-        $this->addArgument('file_path', InputArgument::REQUIRED, 'Absolute path to the CSV file to analyze.');
-        $this->addArgument('output_folder', InputArgument::REQUIRED, 'Path to output folder.');
+        $this->addOption('validate', 'val', InputArgument::OPTIONAL, 'Only validate database structure.');
+        $this->addArgument('file_path', InputArgument::REQUIRED, 'Path to the CSV file to analyze.');
+        $this->addArgument('output_folder', InputArgument::OPTIONAL, 'Path to output folder.');
 
         parent::configure();
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @inheritDoc
+     *
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $interface    = new SymfonyStyle($input, $output); // Used to display errors and success
@@ -73,5 +83,4 @@ class CSVGenerateStructureCommand extends Command
         $database->toSQL();
         dd($database->getSQL());
     }
-
 }
