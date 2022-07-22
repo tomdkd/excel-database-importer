@@ -1,9 +1,9 @@
 <?php
 
-namespace Tomdkd\ExcelDatabaseImporter\Service;
+namespace Tomdkd\ExcelDatabaseImporter\Util;
 
-use JetBrains\PhpStorm\NoReturn;
 use Tomdkd\ExcelDatabaseImporter\Exception\EmptyColumnException;
+use Tomdkd\ExcelDatabaseImporter\Service\FilesystemService;
 
 class SQLColumnGenerator {
 
@@ -12,15 +12,17 @@ class SQLColumnGenerator {
     private array  $lines;
     private array  $columnValues = [];
     private array  $columnConfiguration = [];
+    private string $delimiter;
 
     private FilesystemService $filesystem;
 
-    public function __construct(string $columnName, int $columnIndex, array $values)
+    public function __construct(string $columnName, int $columnIndex, array $values, string $delimiter)
     {
         $this->columnName  = str_replace("\r\n", '',$columnName);
         $this->columnIndex = $columnIndex;
         $this->lines       = array_values($values);
-        $this->filesystem  = new FilesystemService();
+        $this->filesystem   = new FilesystemService();
+        $this->delimiter   = $delimiter;
 
         $this->parse();
     }
@@ -28,18 +30,25 @@ class SQLColumnGenerator {
     private function parse(): void
     {
         $this->getValuesOnlyForColumns();
-
         $this->columnConfiguration = [
             'name'     => $this->columnName,
             'datatype' => $this->getColumnType(),
-            'values'   => $this->columnValues
+            'values'   => implode(',', $this->columnValues)
         ];
+        $this->resetConfig();
+    }
+
+    private function resetConfig(): void
+    {
+        $this->lines = [];
+        $this->columnValues = [];
     }
 
     private function getValuesOnlyForColumns(): void
     {
         foreach ($this->lines as $line) {
-            $this->columnValues[] = empty($line) ? null : str_replace("\r\n", '', $line[$this->columnIndex]);
+            $line = explode($this->delimiter, $line);
+            $this->columnValues[] = empty($line) ? null : $line[$this->columnIndex];
         }
     }
 
