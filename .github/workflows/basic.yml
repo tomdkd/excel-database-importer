@@ -10,7 +10,7 @@ on:
 
 jobs:
   dependencies:
-    runs-on: composer/composer:alpine
+    runs-on: composer
 
     steps:
       - name: Installing dependencies
