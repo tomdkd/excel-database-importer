@@ -53,11 +53,11 @@ class CSVGenerateStructureCommand extends Command
         $filePath      = $input->getArgument('file_path');
         $outputFolder = $input->getArgument('output_folder');
         $validate     = $input->getOption('validate'); // Option to only display sql query without saving
-        $tableName    = "Toto";
 
         // Display an error on interface if file does not exist or extension is wrong
         $filesystem->setFile($filePath)->check('csv');
 
+        $tableName  = $filesystem->getName();
         $file        = $filesystem->getFileAsArray();
         $csv        = new Csv($filePath);
         $sheetInfos = [
@@ -66,18 +66,36 @@ class CSVGenerateStructureCommand extends Command
             'delimiter'     => $csv->getDelimiter() ?: ',',
             'database_name' => $filesystem->convertSheetNameIntoDatabaseName()
         ];
+
+        $interface->text(sprintf('Create database %s schema.', $sheetInfos['database_name']));
+        $interface->createProgressBar();
+        $interface->progressStart(1);
+
+        // Generate the database creation
         $database   = new SQLDatabaseGenerator($sheetInfos['database_name']);
+
+        // Get columns name
         $columns    = $filesystem->getColumns($file, $sheetInfos['delimiter']);
 
-        // Processing to concatenate values for add columns
+        $interface->progressFinish();
+        $interface->info(sprintf('%s columns found.', count($columns)));
+
+        $interface->newLine();
+        $interface->text('Generating values');
+        $interface->createProgressBar();
+        $interface->progressStart(count($columns));
+
         $table      = new SQLTableGenerator($tableName);
 
         foreach ($columns as $columnIndex => $columnName) {
             $column = new SQLColumnGenerator($columnName, $columnIndex, $file, $sheetInfos['delimiter']);
-            $values = [];
 
             $table->addColumn($column);
+            $interface->progressAdvance(1);
         }
+
+        $interface->progressFinish();
+        $interface->success(sprintf('Database %s successfully generated.', $sheetInfos['database_name']));
 
         $database->addTable($table);
         $database->toSQL();

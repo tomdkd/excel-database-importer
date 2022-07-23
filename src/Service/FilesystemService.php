@@ -10,6 +10,9 @@ class FilesystemService
     private ?SymfonyStyle $interface;
     private File $file;
 
+    const CHAR_TO_REPLACE  = ['-', 'é', 'è', 'à', "\r\n"];
+    const CHAR_REPLACED_BY = ['_', 'e', 'e', 'a', ''];
+
     public function __construct(SymfonyStyle $interface = null)
     {
         $this->interface = $interface;
@@ -73,19 +76,19 @@ class FilesystemService
     public function getFileAsArray(): array
     {
         return array_map(function ($line) {
-            return str_replace(['-', 'é', 'è', 'à', "\r\n"], ['_', 'e', 'e', 'a', ''], strtolower($line));
+            return $this->replaceCharacters(strtolower($line));
         }, file($this->file->getPathname()));
     }
 
     public function getName(): string
     {
-        return $this->file->getBasename();
+        return strtolower($this->replaceCharacters($this->file->getBasename()));
     }
 
     public function convertSheetNameIntoDatabaseName(): string
     {
         $sheetNameExploded = explode('.', $this->getName());
-        return str_replace(['-', 'é', 'è', 'à', "\r\n"], ['_', 'e', 'e', 'a', ''], strtolower($sheetNameExploded[0]));
+        return $this->replaceCharacters(strtolower($sheetNameExploded[0]));
     }
 
     public function getColumns(array &$fileAsArray, string $delimiter): array
@@ -94,5 +97,10 @@ class FilesystemService
         unset($fileAsArray[0]);
         $fileAsArray = array_values($fileAsArray);
         return explode($delimiter, $columns);
+    }
+
+    public function replaceCharacters(string $string): string
+    {
+        return str_replace(self::CHAR_TO_REPLACE, self::CHAR_REPLACED_BY, $string);
     }
 }

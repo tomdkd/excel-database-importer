@@ -5,6 +5,9 @@ namespace Tomdkd\ExcelDatabaseImporter\Util;
 use Tomdkd\ExcelDatabaseImporter\Exception\EmptyColumnException;
 use Tomdkd\ExcelDatabaseImporter\Service\FilesystemService;
 
+/**
+ * This class is used to get columns and set their own data and type.
+ */
 class SQLColumnGenerator
 {
 
@@ -28,6 +31,11 @@ class SQLColumnGenerator
         $this->parse();
     }
 
+    /**
+     * Create full configuration of column.
+     *
+     * @return void
+     */
     private function parse(): void
     {
         $this->getValuesOnlyForColumns();
@@ -39,12 +47,22 @@ class SQLColumnGenerator
         $this->resetConfig();
     }
 
+    /**
+     * Reset config to empty array.
+     *
+     * @return void
+     */
     private function resetConfig(): void
     {
         $this->lines = [];
         $this->columnValues = [];
     }
 
+    /**
+     * Get values just for this column to insert.
+     *
+     * @return void
+     */
     private function getValuesOnlyForColumns(): void
     {
         foreach ($this->lines as $line) {
@@ -53,6 +71,11 @@ class SQLColumnGenerator
         }
     }
 
+    /**
+     * Check if column can be nullable or not.
+     *
+     * @return bool
+     */
     public function isNullable(): bool
     {
         foreach ($this->getValues() as $value) {
@@ -64,6 +87,11 @@ class SQLColumnGenerator
         return false;
     }
 
+    /**
+     * Get value and define real column type. If a string contains a number, it returns INT.
+     *
+     * @return string|null
+     */
     private function getColumnType(): ?string
     {
         foreach ($this->columnValues as $value) {

@@ -2,6 +2,10 @@
 
 namespace Tomdkd\ExcelDatabaseImporter\Util;
 
+/**
+ * This class is the main class to generate sql query.
+ * It contains references to SQLTableGenerator
+ */
 class SQLDatabaseGenerator
 {
 
@@ -19,6 +23,11 @@ class SQLDatabaseGenerator
         $this->databaseName   = $databaseName;
     }
 
+    /**
+     * Convert objects attributes like SQLTableGenerator as sql query.
+     *
+     * @return $this
+     */
     public function toSQL(): self
     {
         // Database base creation
@@ -46,12 +55,24 @@ class SQLDatabaseGenerator
         return $this;
     }
 
+    /**
+     * Save sql query into a .sql file.
+     *
+     * @param string $path
+     * @return bool
+     */
     public function save(string $path): bool
     {
         $filename = sprintf('create_%s_database.sql', $this->databaseName);
         return file_put_contents(sprintf('%s/%s', $path, $filename), $this->sqlQuery);
     }
 
+    /**
+     * Add reference to SQLTableGenerator in an array.
+     *
+     * @param SQLTableGenerator $table
+     * @return void
+     */
     public function addTable(SQLTableGenerator $table): void
     {
         $this->tables[] = $table;
@@ -62,6 +83,11 @@ class SQLDatabaseGenerator
         return $this->sqlQuery;
     }
 
+    /**
+     * Check if object contains a name and tables
+     *
+     * @return bool
+     */
     private function validate(): bool
     {
         if (is_null($this->databaseName) || empty($this->tables)) {
@@ -70,6 +96,12 @@ class SQLDatabaseGenerator
         return true;
     }
 
+    /**
+     * This function is used to add a query inside the full query string.
+     *
+     * @param string $text
+     * @return void
+     */
     public function addToQuery(string $text): void
     {
         $this->sqlQuery = sprintf('%s %s', $this->sqlQuery, $text);
