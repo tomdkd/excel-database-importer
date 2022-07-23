@@ -1,2 +1,2 @@
 # excel-database-importer develop init
-## ![Cirrus CI - Specific Branch Build Status](https://img.shields.io/cirrus/github/tomdkd/excel-database-importer/master?label=master&style=for-the-badge) ![Cirrus CI - Specific Branch Build Status](https://img.shields.io/cirrus/github/tomdkd/excel-database-importer/develop?label=develop&style=for-the-badge) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/tomdkd/excel-database-importer?label=latest&style=for-the-badge)
+## [![CI](https://github.com/tomdkd/excel-database-importer/actions/workflows/basic.yml/badge.svg?branch=develop)](https://github.com/tomdkd/excel-database-importer/actions/workflows/basic.yml)
