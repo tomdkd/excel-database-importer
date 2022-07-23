@@ -16,7 +16,7 @@ jobs:
       - uses: actions/upload-artifact@master
       with:
         - name: bundle artifact
-        - path: ./
+          path: ./
 
       - name: install
         run: composer install
