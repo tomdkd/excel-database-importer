@@ -4,4 +4,7 @@ parameters:
 services:
   tomdkd.excel_database_importer.csv_generate_structure_command:
     class: '%tomdkd.excel_database_importer.csv_generate_structure_command.class%'
+    arguments:
+      - 'database:csv:generate-structure'
+      - '%kernel.project_dir%'
     tags: ['console.command']
