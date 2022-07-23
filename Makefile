@@ -16,6 +16,6 @@ cs: ## Check code with sniffer
 fix-cs: ## Fix code sniffer errors
 	php ./vendor/bin/phpcbf ./src --standard=PSR2 --ignore=*/vendor/*,*/Resources/*
 
-.PHONY: unit-test
-unit-test:
+.PHONY: unit-tests
+unit-tests: ## Run unit-tests
 	php ./vendor/bin/phpunit --bootstrap vendor/autoload.php ./tests/Unit/Model
