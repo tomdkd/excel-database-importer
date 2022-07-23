@@ -70,7 +70,7 @@ class CSVGenerateStructureCommand extends Command
         $columns    = $filesystem->getColumns($file, $sheetInfos['delimiter']);
 
         // Processing to concatenate values for add columns
-        $table = new SQLTableGenerator($tableName);
+        $table      = new SQLTableGenerator($tableName);
 
         foreach ($columns as $columnIndex => $columnName) {
             $column = new SQLColumnGenerator($columnName, $columnIndex, $file, $sheetInfos['delimiter']);

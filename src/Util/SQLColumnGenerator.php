@@ -34,7 +34,7 @@ class SQLColumnGenerator
         $this->columnConfiguration = [
             'name'     => $this->columnName,
             'datatype' => $this->getColumnType(),
-            'values'   => implode(',', $this->columnValues)
+            'values'   => $this->columnValues
         ];
         $this->resetConfig();
     }
@@ -55,7 +55,7 @@ class SQLColumnGenerator
 
     public function isNullable(): bool
     {
-        foreach ($this->columnValues as $value) {
+        foreach ($this->getValues() as $value) {
             if (is_null($value)) {
                 return true;
             }
@@ -92,7 +92,7 @@ class SQLColumnGenerator
 
     public function getValue(int $index): mixed
     {
-        return $this->columnValues[$index];
+        return $this->columnConfiguration['values'][$index];
     }
 
     public function isPrimary(): bool
