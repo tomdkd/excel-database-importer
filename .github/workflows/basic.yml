@@ -17,6 +17,8 @@ jobs:
       - name: install
         run: composer install
 
+      - run: ls -la
+
       - uses: actions/upload-artifact@v3
         with:
           name: project-folder
