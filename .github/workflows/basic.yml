@@ -35,8 +35,6 @@ jobs:
           name: project-folder
           path: ./
 
-      - run: pwd
-
       - name: unzip-artifact
         run: unzip project.zip
 
