@@ -19,6 +19,7 @@ jobs:
 
   tests:
     runs-on: ubuntu-latest
+    needs: [build]
     steps:
       - name: code-style
         run: php ./vendor/bin/phpcs ./src --standard=PSR2 --ignore=*/vendor/*,*/Resources/*
