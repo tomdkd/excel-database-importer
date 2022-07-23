@@ -29,5 +29,3 @@ Add option ```--validate``` to only display SQL query.
 
 ## Dependencies
 **Excel Database Importer** includes the dependency [php-sqllint](https://github.com/cweiske/php-sqllint) to check sql validity. You can use it to check if the generated sql file is valid to run on your sql environment.
-
-![Build Status](https://img.shields.io/github/checks-status/tomdkd/excel-database-importer/develop?style=for-the-badge)
