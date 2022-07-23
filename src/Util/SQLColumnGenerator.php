@@ -99,4 +99,9 @@ class SQLColumnGenerator
     {
         return $this->columnIndex === 0;
     }
+
+    public function getColumnIndex(): int
+    {
+        return $this->columnIndex;
+    }
 }

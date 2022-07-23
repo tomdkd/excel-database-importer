@@ -25,8 +25,8 @@ class SQLDatabaseGenerator
         $this->addToQuery(sprintf("CREATE DATABASE IF NOT EXISTS %s; \n", $this->databaseName));
 
         foreach ($this->tables as $table) {
-            // Adding tables into the same query
-            $this->addToQuery(sprintf("CREATE TABLE IF NOT EXISTS %s ", $table->getTableName()));
+            // Generate tables as SQL query
+            $this->addToQuery(sprintf('CREATE TABLE IF NOT EXISTS %s ', $table->getTableName()));
             $columns = [];
 
             foreach ($table->getColumns() as $column) {
