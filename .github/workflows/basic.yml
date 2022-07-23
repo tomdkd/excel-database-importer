@@ -35,6 +35,11 @@ jobs:
           name: project-folder
           path: ./
 
+      - run: pwd
+
+      - name: unzip-artifact
+        run: unzip project.zip
+
       - name: code-style
         run: php ./vendor/bin/phpcs ./src --standard=PSR2 --ignore=*/vendor/*,*/Resources/*
 
